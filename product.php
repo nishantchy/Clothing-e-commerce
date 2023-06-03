@@ -19,7 +19,19 @@ if(isset($_GET['id'])){
   }
 }
 ?>
-
+<?php
+// Function to check if a product exists in the cart
+function isProductInCart($productId) {
+    if (isset($_SESSION['cart'])) {
+        foreach ($_SESSION['cart'] as $product) {
+            if ($product['p_id'] == $productId) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -84,15 +96,27 @@ if(isset($_GET['id'])){
             </div>
             <div class="order-btns">
                 <div class="btn1">
-                    <button>Order Now</button>
+                <?php
+                  echo '<button class="buy-now" type="submit"><a href="order.php?id=' . $product["p_id"] . '">Buy Now</a></button>';
+                ?>
                 </div>
                 <div class="btn2">
-                    <button>Add to Cart</button>
+                <?php
+                  echo '<button class="buy" onclick="addToCart(this, ' . $product['p_id'] . ');">Add to Cart</button>';   
+                  echo '<script>
+                  function addToCart(button, productId) {
+                      button.innerText = "Added to Cart";
+                      // Perform additional logic or AJAX request to add the product to the cart
+                  }
+                  </script>';
+                  ?>
+
+
                 </div>
             </div>
         </div>
       </div>
-</div>
+
  
       <!-- footer -->
       <footer class="bg-light text-center text-white">

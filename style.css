@@ -233,3 +233,18 @@ input .check{
 .success{
     display: none;
 }
+.buy-now a{
+    text-decoration: none;
+    color: aliceblue;
+}
+
+.order-info {
+    height: 52.5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-checkout button a{
+    text-decoration: none;
+    color: aliceblue;
+}

@@ -1,16 +1,16 @@
 <?php
 include "dbconnect.php";
-?>
-<?php
 session_start();
-if(isset($_GET['id'])) {
-  $p_id = $_GET['id'];
-    $sql = "SELECT p_id,p_name, p_price, p_image FROM products WHERE p_id = $p_id";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        $product = $result->fetch_assoc();
-        $_SESSION['product'] = $products; 
-    }
+ if (isset($_GET['id'])) {
+     $product_id = $_GET['id'];
+     $sql = "SELECT p_id,p_name, p_price, p_image FROM products WHERE p_id = $product_id";
+     $result = $conn->query($sql);
+     if ($result->num_rows > 0) {
+         $product = $result->fetch_assoc();
+         $total = $product['p_price'];
+     } else {
+         echo "Product not found.";
+   }
 }
 ?>
 
@@ -36,7 +36,7 @@ if(isset($_GET['id'])) {
                 <a class="nav-link active" aria-current="page" href="index.php">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="index.php">Our Products</a>
+                <a class="nav-link" href="#products">Our Products</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -62,37 +62,18 @@ if(isset($_GET['id'])) {
           </div>
         </div>
       </nav>
-      <!-- End of Nav -->
-      <div class="fa-container items">
-      <?php
-// Check if the 'cart' session variable exists
-       if (isset($_SESSION['cart'])) {
-     // Loop through the products in the cart
-      foreach ($_SESSION['cart'] as $product) {
-        echo '<div class="item-one">';
-        echo '<div class="img">';
-        echo '<img src="uploads/' . $product['p_image'] . '" alt="">';
-        echo '</div>';
-        echo '<div class="name">';
-        echo '<p>' . $product['p_name'] . '</p>';
-        echo '<div class="price">';
-        echo 'Rs. ' . $product['p_price'];
-        echo '</div>';
-        echo '</div>';
-        echo '<div class="btns d-flex">';
-        echo '<div class="btn-checkout">';
-        echo '<button class="btn btn-success"><a href="order.php?id=' . $product["p_id"] . '">Check Out</a></button>';
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
-    }
-} else {
-    echo '<p>No items in the cart.</p>';
-}
+<!-- End of navigation -->
+<?php
+date_default_timezone_set('UTC');
+$currentDate = date('Y-m-d');
+$futureDate = date('Y-m-d', strtotime($currentDate . ' +2 days'));
+
 ?>
 
-</div>
-      <!-- footer -->
+           <div class="order-info">
+              <p>Your total is Rs. <?php echo $total ?> and you will receive your order in <?= $futureDate?>.</p>
+           </div>
+<!-- footer -->
       <footer class="bg-light text-center text-white">
         <!-- Grid container -->
         <div class="social-media">
