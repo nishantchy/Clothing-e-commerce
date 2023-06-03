@@ -77,7 +77,7 @@ if(isset($_POST['submit'])){
     </div>
     <div class="container">
         <div class="logo-section">
-            <img src="./svg/png/logo-black.png" alt="">
+            <img src="svg/logo.png" alt="">
         </div>
     <div class="form-section">
         <form method="post">
